@@ -1,0 +1,247 @@
+body {
+    background-color: rgb(249, 232, 201);
+    margin: 0;
+    width: 100%;
+}
+
+/* Encabezado */
+.navbar {
+    border: 7px solid rgb(29, 36, 202);
+    padding: 0;
+    margin: 0;
+}
+
+.navbar img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.navbar img:hover {
+    transform: scale(1.1);
+}
+
+.navbar-toggler {
+    filter: invert();
+}
+
+.container-fluid {
+    background-color: rgb(32, 22, 88);
+    height: auto;
+    padding: 10px;
+}
+
+.nav-item a {
+    color: rgb(32, 22, 88) !important;
+}
+
+.navbar li {
+    border: 5px solid rgb(29, 36, 202);
+    border-radius: 20px;
+    background-color: rgb(152, 171, 238);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px;
+    text-align: center;
+    padding: 5px;
+}
+
+/* Título principal */
+h1 {
+    font-family: "Sedan SC", serif;
+    font-weight: 500;
+    font-style: normal;
+    text-align: center;
+    color: rgb(29, 36, 202);
+    text-shadow: 2px 3px rgb(249, 232, 201);
+    font-size: 80px;
+    width: 100%;
+    height: auto;
+    background-image: url(/imagenes/estrellas.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px 0;
+}
+
+h2 {
+    font-family: "Satisfy", cursive;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    font-size: 50px;
+    color: rgb(29, 36, 202);
+    text-decoration: underline;
+    margin: 20px 0;
+}
+
+/* Tarjetas */
+.tarjetas {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 40px;
+    margin: 50px 0;
+    background-color: rgb(32, 22, 88);
+    flex-wrap: wrap; /* Responsividad */
+}
+
+.tarjetas img {
+    width: 400px;
+    height: auto;
+    border: 10px double rgb(29, 36, 202);
+    border-radius: 50px;
+    transition: all 400ms ease;
+    max-width: 100%;
+}
+
+.tarjetas img:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.6);
+    transform: translateY(-3%);
+}
+
+/* Álbum */
+.album {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 40px;
+    background-color: rgb(32, 22, 88);
+    border-top: 15px dashed rgb(29, 36, 202);
+    border-bottom: 15px dashed rgb(29, 36, 202);
+    flex-wrap: wrap; /* Responsividad */
+    margin-bottom: 20px;
+}
+
+.album img {
+    width: 400px;
+    height: auto;
+    border: 10px double rgb(29, 36, 202);
+    border-radius: 50px;
+    transition: all 400ms ease;
+    max-width: 100%;
+}
+
+.album img:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.6);
+    transform: translateY(-3%);
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    background-color: rgb(32, 22, 88);
+    border: 7px solid rgb(29, 36, 202);
+    color: rgb(152, 171, 238);
+    padding: 20px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 60px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    .tarjetas img, .album img {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    .tarjetas, .album {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .tarjetas img, .album img {
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 30px;
+        padding: 10px 0;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .tarjetas img, .album img {
+        width: 200px;
+    }
+
+    .navbar img {
+        height: 80px;
+        width: 80px;
+    }
+
+    .navbar li {
+        font-size: 16px;
+        padding: 3px;
+    }
+}
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    max-height: 1000px; /* Limita la altura en dispositivos más grandes */
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.carousel-caption h5, 
+.carousel-caption p {
+    font-family: "EB Garamond", serif;
+    margin: 0;
+}
+
+.carousel-caption p {
+    font-size: 18px;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    .carousel-item img {
+        height: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item img {
+        height: 400px;
+    }
+
+    .carousel-caption {
+        font-size: 14px;
+    }
+}
