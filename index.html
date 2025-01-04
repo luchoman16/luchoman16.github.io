@@ -10,47 +10,45 @@
             background-color: #f9f4e8;
             margin: 0;
             padding: 0;
-            text-align: center;
+            overflow-x: hidden;
         }
         header {
             background-color: #d70000;
             padding: 20px;
+            text-align: center;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
         }
         header h1 {
             color: white;
-            font-size: 2.5em;
+            font-size: 2em;
         }
         .snoopy-image {
-            margin-top: 20px;
-            position: relative;
+            margin: 20px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 500px;
+            position: relative;
+            height: 300px;
         }
         .snoopy-image img {
-            z-index: 2;
-            position: absolute;
             transition: transform 0.5s ease, opacity 0.5s ease;
         }
         #heart-container {
             position: absolute;
-            top: 60%; /* Moved down */
-            left: 70%; /* Moved right */
-            transform: translate(-50%, -50%);
-            width: 500px; /* Increased size */
-            height: 500px; /* Increased size */
+            top: 90px; /* Ajustado para estar un poco más abajo del header */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px; /* Tamaño pequeño */
+            height: 200px; /* Tamaño pequeño */
             pointer-events: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
+            display: none;
         }
         .snoopy {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 30px; /* Tamaño más pequeño */
+            height: 30px; /* Tamaño más pequeño */
             background-image: url('https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png');
             background-size: cover;
             pointer-events: none;
@@ -72,6 +70,7 @@
             background: #fff;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         .message p {
             font-size: 1.2em;
@@ -79,26 +78,102 @@
             color: #555;
         }
         .interactive {
-            margin: 30px 0;
+            margin: 20px 0;
+            text-align: center;
         }
-        .footer {
-            margin-top: 30px;
-            padding: 10px;
+        .interactive button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
             background-color: #d70000;
-            box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .footer p {
-            font-size: 0.9em;
             color: white;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        @media (max-width: 768px) {
-            .message {
-                padding: 15px;
-                font-size: 1em;
-            }
-            header h1 {
-                font-size: 2em;
-            }
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #d70000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .chat-button img {
+            width: 40px;
+        }
+        #chat-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1001;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #chat-header {
+            background-color: #d70000;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #chat-display {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 1em;
+            color: #333;
+        }
+        .message-bubble {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #d7efff;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        #input-field {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            font-size: 1em;
+        }
+        #send-button {
+            background-color: #d70000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .close-chat {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 1.2em;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -108,10 +183,8 @@
     </header>
 
     <div class="snoopy-image">
-        <div id="heart-container">
-            <!-- The hearts will appear here -->
-        </div>
-        <img id="central-snoopy" src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png" alt="Snoopy" width="300">
+        <div id="heart-container"></div>
+        <img id="central-snoopy" src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png" alt="Snoopy">
     </div>
 
     <div class="message">
@@ -125,12 +198,23 @@
     </div>
 
     <div class="interactive">
-        <h2>Haz clic en el corazón:</h2>
-        <button id="heart-button" style="font-size: 1.5em; padding: 10px 20px; border: none; background-color: #d70000; color: white; border-radius: 5px; cursor: pointer;">❤️</button>
+        <button id="heart-button">❤️ Haz clic en el corazón</button>
     </div>
 
-    <div class="footer">
-        <p>La Sirenita.</p>
+    <div class="chat-button" id="chat-button">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/53/Snoopy_Peanuts.png" alt="Chat Snoopy">
+    </div>
+
+    <div id="chat-container">
+        <div id="chat-header">
+            <button class="close-chat" id="close-chat">✖</button>
+            <h2>Chat con Lucho</h2>
+        </div>
+        <div id="chat-display"></div>
+        <div id="chat-input">
+            <input type="text" id="input-field" placeholder="Escribe tu mensaje aquí...">
+            <button id="send-button">Enviar</button>
+        </div>
     </div>
 
     <audio autoplay loop>
@@ -142,37 +226,91 @@
         const heartButton = document.getElementById('heart-button');
         const heartContainer = document.getElementById('heart-container');
         const centralSnoopy = document.getElementById('central-snoopy');
+        const chatButton = document.getElementById('chat-button');
+        const chatContainer = document.getElementById('chat-container');
+        const closeChat = document.getElementById('close-chat');
+        const chatDisplay = document.getElementById('chat-display');
+        const inputField = document.getElementById('input-field');
+        const sendButton = document.getElementById('send-button');
 
         heartButton.addEventListener('click', () => {
-            // Hide the central Snoopy
+            // Ocultar el Snoopy principal
             centralSnoopy.style.opacity = '0';
             setTimeout(() => {
                 centralSnoopy.style.display = 'none';
             }, 500);
 
-            // Clear previous heart coordinates if any
+            // Mostrar las animaciones del corazón dentro de la imagen de Snoopy
+            heartContainer.style.display = 'block';
             heartContainer.innerHTML = '';
 
-            // Generate heart shape coordinates
+            // Generar Snoopys en forma de corazón
             const hearts = [];
-            const size = 200; // Adjust size of the heart
+            const size = 100; // Ajustado tamaño más pequeño
             for (let angle = 0; angle < 360; angle += 10) {
                 const radians = (Math.PI / 180) * angle;
                 const x = 16 * Math.sin(radians) ** 3;
                 const y = 13 * Math.cos(radians) - 5 * Math.cos(2 * radians) - 2 * Math.cos(3 * radians) - Math.cos(4 * radians);
-                hearts.push({ x: size / 2 + x * size / 30, y: size / 2 - y * size / 30 });
+                hearts.push({ x: size / 2 + x * size / 15, y: size / 2 - y * size / 15 });
             }
 
-            // Create Snoopys in a heart shape with animation
             hearts.forEach((coord, index) => {
                 const snoopy = document.createElement('div');
                 snoopy.classList.add('snoopy');
                 snoopy.style.left = `${coord.x}px`;
                 snoopy.style.top = `${coord.y}px`;
-                snoopy.style.animationDelay = `${index * 0.1}s`; // Stagger the animation
+                snoopy.style.animationDelay = `${index * 0.1}s`;
                 heartContainer.appendChild(snoopy);
             });
         });
+
+        chatButton.addEventListener('click', () => {
+            chatContainer.style.display = 'flex';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatContainer.style.display = 'none';
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+        inputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = inputField.value.trim();
+            if (!userMessage) return;
+
+            const userBubble = document.createElement('div');
+            userBubble.className = 'message-bubble user-message';
+            userBubble.textContent = userMessage;
+            chatDisplay.appendChild(userBubble);
+
+            inputField.value = ''; // Limpiar campo de texto
+
+            // Respuesta del bot
+            setTimeout(() => {
+                const botResponse = getBotResponse(userMessage);
+                const botBubble = document.createElement('div');
+                botBubble.className = 'message-bubble bot-message';
+                botBubble.textContent = botResponse;
+                chatDisplay.appendChild(botBubble);
+                chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            }, 1000);
+        }
+
+        function getBotResponse(userMessage) {
+            // Respuestas predefinidas
+            const responses = {
+                "hola": "¡Hola! ¿En qué puedo ayudarte?",
+                "como estas": "¡Estoy bien! ¿Y tú?",
+                "adios": "¡Hasta luego!"
+            };
+
+            return responses[userMessage.toLowerCase()] || "No entiendo esa pregunta.";
+        }
     </script>
 </body>
 </html>
